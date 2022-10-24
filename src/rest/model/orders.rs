@@ -63,7 +63,7 @@ impl Request for GetOpenOrders<'_> {
 #[derive(Debug, Clone, Serialize, Default)]
 #[serde(rename_all = "camelCase")]
 pub struct PlaceOrder<'a> {
-    pub market: &'a str,
+    pub market: Cow<'a, str>,
     pub side: Side,
     // Price should be serialized even if it is None, otherwise
     // market orders will break; test with rest::tests::market_order
@@ -273,7 +273,7 @@ impl Request for GetOrderHistory<'_> {
 #[derive(Debug, Clone, Serialize, Default)]
 #[serde(rename_all = "camelCase")]
 pub struct PlaceTriggerOrder<'a> {
-    pub market: &'a str,
+    pub market: Cow<'a, str>,
     pub side: Side,
     pub size: Decimal,
     pub r#type: OrderType,

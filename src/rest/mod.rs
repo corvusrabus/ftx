@@ -21,6 +21,7 @@ use std::{
     ops::Not,
     time::{SystemTime, UNIX_EPOCH},
 };
+use std::borrow::Cow;
 
 macro_rules! deprecate_msg {
     () => {
@@ -401,7 +402,7 @@ impl Rest {
         }
 
         let req = PlaceOrder {
-            market,
+            market : Cow::Borrowed(market),
             side,
             price,
             r#type,
@@ -431,7 +432,7 @@ impl Rest {
         trail_value: Option<Decimal>,
     ) -> Result<OrderInfo> {
         self.request(PlaceTriggerOrder {
-            market,
+            market : Cow::Borrowed(market),
             side,
             size,
             r#type,
