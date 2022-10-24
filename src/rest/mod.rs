@@ -17,11 +17,11 @@ use reqwest::{
     Client, ClientBuilder, Method,
 };
 use rust_decimal::prelude::*;
+use std::borrow::Cow;
 use std::{
     ops::Not,
     time::{SystemTime, UNIX_EPOCH},
 };
-use std::borrow::Cow;
 
 macro_rules! deprecate_msg {
     () => {
@@ -90,8 +90,7 @@ impl Rest {
         #[cfg(feature = "optimized-access")]
         let url = if R::OPTIMIZED_ACCESS_SUPPORTED {
             format!("{}{}", self.endpoint.optimized_access_rest(), path)
-        }
-        else {
+        } else {
             format!("{}{}", self.endpoint.rest(), path)
         };
         #[cfg(not(feature = "optimized-access"))]
@@ -402,7 +401,7 @@ impl Rest {
         }
 
         let req = PlaceOrder {
-            market : Cow::Borrowed(market),
+            market: Cow::Borrowed(market),
             side,
             price,
             r#type,
@@ -432,7 +431,7 @@ impl Rest {
         trail_value: Option<Decimal>,
     ) -> Result<OrderInfo> {
         self.request(PlaceTriggerOrder {
-            market : Cow::Borrowed(market),
+            market: Cow::Borrowed(market),
             side,
             size,
             r#type,
