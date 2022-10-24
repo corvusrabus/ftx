@@ -162,31 +162,31 @@ impl Ws {
                 .await?;
 
             // Confirmation should arrive within the next 100 updates
-            for _ in 0..100 {
-                let response = self.next_response().await?;
-                match response {
-                    Response {
-                        r#type: Type::Subscribed,
-                        ..
-                    } if subscribe => {
-                        // Subscribe confirmed
-                        continue 'channels;
-                    }
-                    Response {
-                        r#type: Type::Unsubscribed,
-                        ..
-                    } if !subscribe => {
-                        // Unsubscribe confirmed
-                        continue 'channels;
-                    }
-                    _ => {
-                        // Otherwise, continue adding contents to buffer
-                        self.handle_response(response);
-                    }
-                }
-            }
-
-            return Err(Error::MissingSubscriptionConfirmation);
+            // for _ in 0..100 {
+            //     let response = self.next_response().await?;
+            //     match response {
+            //         Response {
+            //             r#type: Type::Subscribed,
+            //             ..
+            //         } if subscribe => {
+            //             // Subscribe confirmed
+            //             continue 'channels;
+            //         }
+            //         Response {
+            //             r#type: Type::Unsubscribed,
+            //             ..
+            //         } if !subscribe => {
+            //             // Unsubscribe confirmed
+            //             continue 'channels;
+            //         }
+            //         _ => {
+            //             // Otherwise, continue adding contents to buffer
+            //             self.handle_response(response);
+            //         }
+            //     }
+            // }
+            //
+            // return Err(Error::MissingSubscriptionConfirmation);
         }
 
         Ok(())
