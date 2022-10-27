@@ -162,6 +162,28 @@ impl Request for CancelOrder {
 }
 
 #[derive(Debug, Clone, Serialize, Default)]
+pub struct CancelTriggerOrder {
+    #[serde(skip_serializing)]
+    pub id: Id,
+}
+
+impl CancelTriggerOrder {
+    pub fn new(order_id: Id) -> Self {
+        Self { id: order_id }
+    }
+}
+
+impl Request for CancelTriggerOrder {
+    const METHOD: Method = Method::DELETE;
+    const PATH: &'static str = "/conditional_orders/{}";
+    const AUTH: bool = true;
+    type Response = String;
+
+    fn path(&self) -> Cow<'_, str> {
+        Cow::Owned(format!("/conditional_orders/{}", self.id))
+    }
+}
+#[derive(Debug, Clone, Serialize, Default)]
 #[serde(rename_all = "camelCase")]
 pub struct CancelAllOrder<'a> {
     #[serde(skip_serializing_if = "Option::is_none")]
